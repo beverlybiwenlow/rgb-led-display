@@ -1,4 +1,5 @@
-INSTRUCTIONS FOR SETTING UP AND IMPLEMENTING THE RGB LED DISPLAYS FOR KETOS
+Instructions for setting up and impleneting RGB LED displays
+============================================================
 
 Starting points to note:
 - This folder contains a C++ library, and bindings to use separate C# and python libraries. For the functionality required and simplicity's sake, we will be using the [python library](rpi-rgb-led-matrix/bindings/python).
