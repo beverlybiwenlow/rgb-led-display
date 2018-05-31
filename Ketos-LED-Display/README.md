@@ -11,7 +11,7 @@ Testing the LED displays:
    - note that you must run command as root and hence sudo is required
 
 Doing the API calls to get display data:
-1. In the terminal, go to the directory with the API call script found [here](rpi-rgb-led-matrix/bindings/python/samples/Data files).
+1. In the terminal, go to the directory with the API call script found [here](rpi-rgb-led-matrix/bindings/python/samples/data-files).
 2. Run "sudo python getData.py"
    - The API call is done in a while true loop with 5 min intervals after each successful call. To edit this value, edit time.sleep() in the loop
    - To prevent the API calls from looping, uncomment "break" in the while loop
