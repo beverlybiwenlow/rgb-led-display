@@ -15,7 +15,7 @@ Doing the API calls to get display data:
 2. Run "sudo python getData.py"
    - The API call is done in a while true loop with 5 min intervals after each successful call. To edit this value, edit time.sleep() in the loop
    - To prevent the API calls from looping, uncomment "break" in the while loop
-   - Each successful API call logs the data into 2 different txt files. [data-keys.txt](rpi-rgb-led-matrix/bindings/python/samples/Data files/data-keygs the keys of the dictionary obtained. [data-values.txt](rpi-rgb-led-matrix/bindings/python/samples/Data files/data-values.txt) logs the corresponding values of those kes.txt) loys.
+   - Each successful API call logs the data into 2 different txt files. [data-keys.txt](rpi-rgb-led-matrix/bindings/python/samples/data-files/data-keys.txt) logs the keys of the dictionary obtained. [data-values.txt](rpi-rgb-led-matrix/bindings/python/samples/data-files/data-values.txt) logs the corresponding values of those keys.
 
 Turning on the LED displays to display the data:
 1. In the terminal, go back to the [python samples directory](rpi-rgb-led-matrix/bindings/python/samples).
