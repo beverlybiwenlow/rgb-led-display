@@ -73,6 +73,7 @@ class RunText(SampleBase):
                         len_keys = self.light_keys(offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys)
                         break
                     else:
+                        # if smallest font is still too big, split number into 2 rows
                         if font == fonts[-1]:
                             num = len(values_text) / 2
                             values_array = []
@@ -94,27 +95,7 @@ class RunText(SampleBase):
                             len_keys = self.light_keys(offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys)
                             break
 
-                # PUT NUMBER INTO 2 ROWS
-##                num = len(values_text) / 2
-##                values_array = []
-##                values_array.append(values_text[:num])
-##                values_array.append(values_text.replace(values_array[0], ''))
-##                height1 = offscreen_canvas.height / 2
-##                height2 = offscreen_canvas.height -1
-##                offscreen_canvas.Clear()
-##                len_values1 = graphics.DrawText(offscreen_canvas, font_small, 0, 0, textColor_values, values_array[0])
-##                len_values2 = graphics.DrawText(offscreen_canvas, font_small, 0, 0, textColor_values, values_array[1])
-##                if len_values1 > len_values2:
-##                    max_len_values = len_values1
-##                else:
-##                    max_len_values = len_values2
-##                new_x_pos_values = offscreen_canvas.width - 6 - max_len_values
-##                len_values1 = graphics.DrawText(offscreen_canvas, font_small, new_x_pos_values, height1, textColor_values, values_array[0])
-##                len_values2 = graphics.DrawText(offscreen_canvas, font_small, new_x_pos_values, height2, textColor_values, values_array[1])
-##                self.light_borders(offscreen_canvas)
-##                len_keys = self.light_keys(offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys)
-
-            
+                            
                 # SCROLL THE NUMBER
 ##                pos = values_boundary
 ##                while True:
