@@ -1,5 +1,4 @@
-volume
-measurements
-co2 reduction
-runtime
+water tested
+water monitored
+sensors deployed
 bottles eliminated

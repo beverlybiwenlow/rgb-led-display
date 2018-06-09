@@ -30,10 +30,10 @@ class RunText(SampleBase):
         x_pos_values = offscreen_canvas.width
                                                         
         while True:
-            with open("Ketos/data-keys.txt", 'r') as f:
+            with open("data-files/data-keys.txt", 'r') as f:
                 keys_text = f.readline()
             
-            with open("Ketos/data-values.txt", 'r') as f:
+            with open("data-files/data-values.txt", 'r') as f:
                 values_text = f.readline()
                 
             keys_text = keys_text.replace("\n", "")            

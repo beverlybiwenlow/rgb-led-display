@@ -6,25 +6,41 @@ import time
 import logging
 import logging.handlers
 
-url = "http://ec2-54-213-39-245.us-west-2.compute.amazonaws.com:5775/api/v1/wave/21/Anahuac%20oi%20oficinas/1525935600000/1526108399827"
+##url = "http://ec2-54-213-39-245.us-west-2.compute.amazonaws.com:5775/api/v1/wave/21/Anahuac%20oi%20oficinas/1525935600000/1526108399827"
+url = "http://ec2-54-213-39-245.us-west-2.compute.amazonaws.com:5775"
+endpoint = "/api/v1/totals_allcustomers/"
 
 def success_callback(response):
     logger.info("API Call Success")
     data = response.json()
-    sensors_data = data["sensors_total"]
+    print(data)
+##    sensors_data = data["sensors_total"]
     f_keys = open('data-keys.txt','w')
     f_values = open('data-values.txt','w')
 
-    for key in sensors_data:
+##    for key in sensors_data:
+    for key in data:
         key_string = json.dumps(key)
         key_string = key_string.replace('"', '')
         key_string = key_string.replace('_', ' ')
         key_string = key_string.replace('total ', '')
         f_keys.write(key_string)
         f_keys.write("\n")
- #       value_string = json.dumps(sensors_data[key])
-        value_string = json.dumps(round(sensors_data[key]))
+        
+##        value_string = json.dumps(round(sensors_data[key]))
+        print(type(data[key]))
+        if isinstance(data[key], basestring):
+            data[key] = data[key].replace('gallons', '')
+            data[key] = float(data[key])
+            has_gallons_unit = True
+        else:
+            has_gallons_unit = False
+        print(type(data[key]))
+        value_string = json.dumps(data[key])
+        value_string = value_string.replace('"', '')
         value_string = value_string.replace('.0', '')
+        if has_gallons_unit:
+            value_string += " gal"
         f_values.write(value_string)
         f_values.write("\n")
     
@@ -49,7 +65,8 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 while(True):
-    response = requests.get(url)
+##    response = requests.get(url)
+    response = requests.get(url + endpoint)
     response_status = response.status_code
     if(response_status == 200):
         success_callback(response)
