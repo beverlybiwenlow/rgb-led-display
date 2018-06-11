@@ -45,10 +45,6 @@ class RunText(SampleBase):
 ##                value = value.replace("\n", "")
             keys_text = keys_text.replace("\n", "")            
             values_text = values_text.replace("\n", "")
-            values_text = values_text.split()
-            values_int = int(values_text[0])
-            values_int_encoded = "{:,}".format(values_int)
-            values_text = values_int_encoded + " " + values_text[1]
             
             font_values.LoadFont("../../../fonts/" + font_size_num + ".bdf")
             
