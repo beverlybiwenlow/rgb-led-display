@@ -13,9 +13,9 @@ class RunText(SampleBase):
   
   
     def run(self):
-        font_size_word = "7x13B"
+        font_size_word = "7x13"
         font_size_num = "9x15B"
-        font_size_small = "6x9"
+        font_size_small = "6x10"
         
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font_keys = graphics.Font()
@@ -32,14 +32,23 @@ class RunText(SampleBase):
         while True:
             with open("data-files/data-keys.txt", 'r') as f:
                 keys_text = f.readline()
+##                keys_text = f.readlines()
+
             
             with open("data-files/data-values.txt", 'r') as f:
                 values_text = f.readline()
-                
+##                values_text = f.readlines()
+            
+##            for key in keys_text:
+##                key = key.replace("\n", "")
+##            for value in values_text:
+##                value = value.replace("\n", "")
             keys_text = keys_text.replace("\n", "")            
             values_text = values_text.replace("\n", "")
-            values_int = int(values_text)
-            values_text = "{:,}".format(values_int)
+            values_text = values_text.split()
+            values_int = int(values_text[0])
+            values_int_encoded = "{:,}".format(values_int)
+            values_text = values_int_encoded + " " + values_text[1]
             
             font_values.LoadFont("../../../fonts/" + font_size_num + ".bdf")
             
@@ -94,22 +103,6 @@ class RunText(SampleBase):
                             self.light_borders(offscreen_canvas)
                             len_keys = self.light_keys(offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys)
                             break
-
-                            
-                # SCROLL THE NUMBER
-##                pos = values_boundary
-##                while True:
-##                    offscreen_canvas.Clear()
-##                    pos += 1
-##                    len_values = graphics.DrawText(offscreen_canvas, font_values, pos, 13, textColor_values, values_text)
-##                    len_keys = self.light_keys(offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys)
-##                    self.light_borders(offscreen_canvas)
-##                    if pos > offscreen_canvas.width:
-##                        pos = values_boundary
-##                        break
-##                    time.sleep(0.05)
-##                    offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
-
 
                 
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
