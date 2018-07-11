@@ -33,8 +33,7 @@ class RunText(SampleBase):
             with open("data-files/data-keys.txt", 'r') as f:
                 keys_text = f.readline()
 ##                keys_text = f.readlines()
-
-            
+           
             with open("data-files/data-values.txt", 'r') as f:
                 values_text = f.readline()
 ##                values_text = f.readlines()
