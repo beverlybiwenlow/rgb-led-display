@@ -24,19 +24,18 @@ def success_callback(response):
 		f_keys.write(key_string)
 		f_keys.write("\n")
 
-	if isinstance(data[key], dict):
-		value_list = data[key].values()
-		print(value_list)
-		value_list["value"] = "{:,}".format(value_list["value"])
-		value_list["unit"] = value_list["unit"].replace("gallons", "gal")
-		value_string = value_list["value"] + " " + value_list["unit"]
+		if isinstance(data[key], dict):
+			value_dict = data[key]
+			value_dict["value"] = "{:,}".format(value_dict["value"])
+			value_dict["unit"] = value_dict["unit"].replace("gallons", "gal")
+			value_string = value_dict["value"] + " " + value_dict["unit"]
 
-	else:
-		num = data[key]
-		value_string = "{:,}".format(num)
+		else:
+			num = data[key]
+			value_string = "{:,}".format(num)
 
-	f_values.write(value_string)
-	f_values.write("\n")
+		f_values.write(value_string)
+		f_values.write("\n")
 
 	f_keys.close()
 	f_values.close()
