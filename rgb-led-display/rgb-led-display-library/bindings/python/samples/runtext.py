@@ -30,11 +30,11 @@ class RunText(SampleBase):
         x_pos_values = offscreen_canvas.width
                                                         
         while True:
-            with open("data-files/data-keys.txt", 'r') as f:
+            with open("data-files/data_keys.txt", 'r') as f:
                 keys_text = f.readline()
 ##                keys_text = f.readlines()
            
-            with open("data-files/data-values.txt", 'r') as f:
+            with open("data-files/data_values.txt", 'r') as f:
                 values_text = f.readline()
 ##                values_text = f.readlines()
             
