@@ -14,8 +14,8 @@ image = Image.open(image_file)
 
 # Configuration for the matrix
 options = RGBMatrixOptions()
-options.rows = 32
-options.chain_length = 1
+options.rows = 16
+options.chain_length = 4
 options.parallel = 1
 options.hardware_mapping = 'regular'  # If you have an Adafruit HAT: 'adafruit-hat'
 
