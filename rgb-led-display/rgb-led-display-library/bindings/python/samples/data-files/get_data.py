@@ -12,8 +12,8 @@ endpoint = "/api/v1/totals_allcustomers/"
 def success_callback(response):
 	logger.info("API Call Success")
 	data = response.json()
-	f_keys = open('data-keys.txt','w')
-	f_values = open('data-values.txt','w')
+	f_keys = open('data_keys.txt','w')
+	f_values = open('data_values.txt','w')
 	print(data)
 
 	for key in data:
@@ -46,7 +46,7 @@ def error_callback(response):
 	logger.info("API Call FAIL with status code %i and error %s" %response.status_code %response.error)
 
 
-f = "loadSensorsTotalData.log"
+f = "load_sensors_total_data.log"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 # create a file handler
