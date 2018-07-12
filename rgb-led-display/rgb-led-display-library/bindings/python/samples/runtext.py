@@ -13,92 +13,96 @@ class RunText(SampleBase):
 
 
 	def run(self):
-		font_size_word = "7x13"
-		font_size_num = "9x15B"
+		font_size_key = "7x13"
+		font_size_val = "9x15B"
 		font_size_small = "6x10"
 
 		offscreen_canvas = self.matrix.CreateFrameCanvas()
-		font_keys = graphics.Font()
-		font_keys.LoadFont("../../../fonts/" + font_size_word + ".bdf")
-		font_values = graphics.Font()
 
+		font_key = graphics.Font()
+		font_key.LoadFont("../../../fonts/{}.bdf".format(font_size_key))
+		font_val = graphics.Font()
 		font_small = graphics.Font()
-		font_small.LoadFont("../../../fonts/" + font_size_small + ".bdf")
-		textColor_keys = graphics.Color(255, 255, 255)
-		textColor_values = graphics.Color(110, 255, 255)
-		x_pos_keys = 2
-		x_pos_values = offscreen_canvas.width
+		font_small.LoadFont("../../../fonts/{}.bdf".format(font_size_small))
+
+		color_key = graphics.Color(255, 255, 255)
+		color_val = graphics.Color(110, 255, 255)
+		x_pos_key = 2
+		x_pos_val = offscreen_canvas.width # Temporary value. Will changed based on length of values
+
+		# y_pos of each item in the list (only 2nd & 3rd row since 1st is for header)
+		y_pos_list = [28, 44]
 
 		while True:
 			with open("data-files/data_keys.txt", 'r') as f:
-				keys_text = f.readline()
-##                keys_text = f.readlines()
+				keys_text =  "key"
+				list_keys = f.readlines()
 
 			with open("data-files/data_values.txt", 'r') as f:
-				values_text = f.readline()
-##                values_text = f.readlines()
+				values_text = "val"
+				list_values = f.readlines()
 
-##            for key in keys_text:
-##                key = key.replace("\n", "")
-##            for value in values_text:
-##                value = value.replace("\n", "")
 			keys_text = keys_text.replace("\n", "")
 			values_text = values_text.replace("\n", "")
 
-			font_values.LoadFont("../../../fonts/" + font_size_num + ".bdf")
+			font_val.LoadFont("../../../fonts/{}.bdf".format(font_size_val))
 
-			# Data LEDs
-			offscreen_canvas.Clear()
-			len_values = graphics.DrawText(offscreen_canvas, font_values, x_pos_values, 0, textColor_values, values_text)
-			offscreen_canvas.Clear()
-			x_pos_values = offscreen_canvas.width - 1 - len_values
+			for idx in range(0, 2):
+				key_text = list_keys[idx].replace("\n", "")
+				val_text = list_values[idx].replace("\n", "")
 
-			# light up keys, values and borders
-			len_keys = self.light_keys(offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys)
-			len_values = graphics.DrawText(offscreen_canvas, font_values, x_pos_values, 13, textColor_values, values_text)
+			# Get length of values
+			offscreen_canvas.Clear()
+			length_val = graphics.DrawText(offscreen_canvas, font_val, x_pos_val, 0, color_val, values_text)
+			offscreen_canvas.Clear()
+			x_pos_val = offscreen_canvas.width - 1 - length_val
+
+			# Light up keys, values and borders
+			length_key = self.light_keys(offscreen_canvas, keys_text, font_key, font_small, x_pos_key, color_key)
+			length_val = graphics.DrawText(offscreen_canvas, font_val, x_pos_val, 44, color_val, values_text)
 			self.light_borders(offscreen_canvas)
 
-			# if number becomes too big
-			values_boundary = x_pos_keys + len_keys
-			if len_values + values_boundary >= offscreen_canvas.width:
+			# Check if number becomes too big (crosses boundary)
+			val_boundary = x_pos_key + length_key
+			if length_val + val_boundary >= offscreen_canvas.width:
 
-				# Decrease the font size
+				# Decrease the font size until it does not cross boundary
 				fonts = ['8x13B','7x13B', '6x13', '6x12', '6x10', '6x9']
 
 				for font in fonts:
-					font_values.LoadFont("../../../fonts/" + font + ".bdf")
+					font_val.LoadFont("../../../fonts/{}.bdf".format(font))
 					offscreen_canvas.Clear()
-					len_values = graphics.DrawText(offscreen_canvas, font_values, 0, 0, textColor_values, values_text)
+					length_val = graphics.DrawText(offscreen_canvas, font_val, 0, 0, color_val, values_text)
 
-					if len_values + values_boundary < offscreen_canvas.width:
-						x_pos_values = offscreen_canvas.width - 1 - len_values
-						len_values = graphics.DrawText(offscreen_canvas, font_values, x_pos_values, 13, textColor_values, values_text)
+					if length_val + val_boundary < offscreen_canvas.width:
+						x_pos_val = offscreen_canvas.width - 1 - length_val
+						length_val = graphics.DrawText(offscreen_canvas, font_val, x_pos_val, 13, color_val, values_text)
 						self.light_borders(offscreen_canvas)
-						len_keys = self.light_keys(offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys)
+						length_key = self.light_keys(offscreen_canvas, keys_text, font_key, font_small, x_pos_key, color_key)
 						break
 					else:
 						# if smallest font is still too big, split number into 2 rows
 						if font == fonts[-1]:
-							num = len(values_text) / 2
+							num = int(len(values_text) / 2)
 							values_array = []
 							values_array.append(values_text[:num])
 							values_array.append(values_text.replace(values_array[0], ''))
 							height1 = offscreen_canvas.height / 2
 							height2 = offscreen_canvas.height -1
 							offscreen_canvas.Clear()
-							len_values1 = graphics.DrawText(offscreen_canvas, font_small, 0, 0, textColor_values, values_array[0])
-							len_values2 = graphics.DrawText(offscreen_canvas, font_small, 0, 0, textColor_values, values_array[1])
+							length_val1 = graphics.DrawText(offscreen_canvas, font_small, 0, 0, color_val, values_array[0])
+							length_val2 = graphics.DrawText(offscreen_canvas, font_small, 0, 0, color_val, values_array[1])
 
-							if len_values1 > len_values2:
-								max_len_values = len_values1
+							if length_val1 > length_val2:
+								max_length_val = length_val1
 							else:
-								max_len_values = len_values2
+								max_length_val = length_val2
 
-							new_x_pos_values = offscreen_canvas.width - 6 - max_len_values
-							len_values1 = graphics.DrawText(offscreen_canvas, font_small, new_x_pos_values, height1, textColor_values, values_array[0])
-							len_values2 = graphics.DrawText(offscreen_canvas, font_small, new_x_pos_values, height2, textColor_values, values_array[1])
+							new_x_pos_val = offscreen_canvas.width - 6 - max_length_val # New position for values
+							length_val1 = graphics.DrawText(offscreen_canvas, font_small, new_x_pos_val, height1, color_val, values_array[0])
+							length_val2 = graphics.DrawText(offscreen_canvas, font_small, new_x_pos_val, height2, color_val, values_array[1])
 							self.light_borders(offscreen_canvas)
-							len_keys = self.light_keys(offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys)
+							length_key = self.light_keys(offscreen_canvas, keys_text, font_key, font_small, x_pos_key, color_key)
 							break
 
 
@@ -107,21 +111,23 @@ class RunText(SampleBase):
 
 
 
-	def light_keys(self, offscreen_canvas, keys_text, font_keys, font_small, x_pos_keys, textColor_keys):
+	def light_keys(self, offscreen_canvas, keys_text, font_key, font_small, x_pos_key, color_key):
 		if " " in keys_text:
 			keys_text = keys_text.split()
 			height1 = offscreen_canvas.height / 2
 			height2 = offscreen_canvas.height -1
-			len_keys1 = graphics.DrawText(offscreen_canvas, font_small, x_pos_keys, height1, textColor_keys, keys_text[0])
-			len_keys2 = graphics.DrawText(offscreen_canvas, font_small, x_pos_keys, height2, textColor_keys, keys_text[1])
-			if len_keys1 > len_keys2:
-				len_keys = len_keys1
+			length_key1 = graphics.DrawText(offscreen_canvas, font_small, x_pos_key, height1, color_key, keys_text[0])
+			length_key2 = graphics.DrawText(offscreen_canvas, font_small, x_pos_key, height2, color_key, keys_text[1])
+
+			if length_key1 > length_key2:
+				length_key = length_key1
 			else:
-				len_keys = len_keys2
+				length_key = length_key2
 
 		else:
-			len_keys = graphics.DrawText(offscreen_canvas, font_keys, x_pos_keys, 13, textColor_keys, keys_text)
-		return len_keys
+			length_key = graphics.DrawText(offscreen_canvas, font_key, x_pos_key, 13, color_key, keys_text)
+		return length_key
+
 
 	def light_borders(self, offscreen_canvas):
 		for x in range(0, offscreen_canvas.width):
