@@ -16,7 +16,6 @@ class RunText(SampleBase):
 		font_size_key = "7x13"
 		font_size_val = "9x15B"
 		font_size_small = "6x10"
-		font_size_header = "8x13B"
 
 		offscreen_canvas = self.matrix.CreateFrameCanvas()
 
@@ -25,20 +24,14 @@ class RunText(SampleBase):
 		font_val = graphics.Font()
 		font_small = graphics.Font()
 		font_small.LoadFont("../../../fonts/{}.bdf".format(font_size_small))
-		font_header = graphics.Font()
-		font_header.LoadFont("../../../fonts/{}.bdf".format(font_size_header))
-
 
 		color_key = graphics.Color(255, 255, 255)
 		color_val = graphics.Color(110, 255, 255)
-		color_header = graphics.Color(47, 86, 233)
 		x_pos_key = 2
 		x_pos_val = offscreen_canvas.width # Temporary value. Will changed based on length of values
 
 		# y_pos of each item in the list (only 2nd & 3rd row since 1st is for header)
-		y_pos_list = [13, 28, 44]
-
-		header_text = "KETOS OVERVIEW"
+		y_pos_list = [13, 28]
 
 		while True:
 			with open("data-files/data_keys.txt", 'r') as f:
@@ -52,23 +45,20 @@ class RunText(SampleBase):
 			for i in range(len(list_keys)):
 				list_keys[i] = list_keys[i].replace("\n", "")
 			for i in range(len(list_values)):
-                list_values[i] = list_values[i].replace("\n", "")
+				list_values[i] = list_values[i].replace("\n", "")
 
 			offscreen_canvas.Clear()
 
-			# Light up header
-			self.light_header(offscreen_canvas, font_header, y_pos_list[0], color_header, header_text)
-
 			# Light up keys
-			length_key_1 = self.light_keys(offscreen_canvas, list_keys[0], font_key, font_small, x_pos_key, y_pos_list[1], color_key, 2)
-			length_key_2 = self.light_keys(offscreen_canvas, list_keys[1], font_key, font_small, x_pos_key, y_pos_list[2], color_key, 3)
+			length_key_1 = self.light_keys(offscreen_canvas, list_keys[2], font_key, font_small, x_pos_key, y_pos_list[0], color_key, 1)
+			length_key_2 = self.light_keys(offscreen_canvas, list_keys[3], font_key, font_small, x_pos_key, y_pos_list[1], color_key, 2)
 
 			# Light up borders
 			self.light_borders(offscreen_canvas)
 
 			# Light up values
-			self.light_values(offscreen_canvas, font_val, font_small, color_val, list_values[0], x_pos_key, length_key_1, y_pos_list[1], 2)
-			self.light_values(offscreen_canvas, font_val, font_small, color_val, list_values[1], x_pos_key, length_key_2, y_pos_list[2], 3)
+			self.light_values(offscreen_canvas, font_val, font_small, color_val, list_values[2], x_pos_key, length_key_1, y_pos_list[0], 1)
+			self.light_values(offscreen_canvas, font_val, font_small, color_val, list_values[3], x_pos_key, length_key_2, y_pos_list[1], 2)
 
 			offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 			time.sleep(0.05)
@@ -149,10 +139,6 @@ class RunText(SampleBase):
 			offscreen_canvas.SetPixel(offscreen_canvas.width - 1, y, 47, 86, 233)
 
 
-	def light_header(self, offscreen_canvas, font_header, y_pos_header, color_header, header_text):
-		length_header = graphics.DrawText(offscreen_canvas, font_header, offscreen_canvas.width, y_pos_header, color_header, header_text)
-		x_pos_header = (128 - length_header) / 2
-		length_header = graphics.DrawText(offscreen_canvas, font_header, x_pos_header, y_pos_header, color_header, header_text)
 
 # Main function
 if __name__ == "__main__":
