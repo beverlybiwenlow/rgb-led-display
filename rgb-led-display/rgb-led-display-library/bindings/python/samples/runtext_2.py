@@ -132,8 +132,7 @@ class RunText(SampleBase):
 
 	def light_borders(self, offscreen_canvas):
 		for x in range(0, offscreen_canvas.width):
-			offscreen_canvas.SetPixel(x, 0, 47, 86, 233)
-			offscreen_canvas.SetPixel(x, 15, 47, 86, 233)
+			offscreen_canvas.SetPixel(x, 31, 47, 86, 233)
 		for y in range(0, offscreen_canvas.height):
 			offscreen_canvas.SetPixel(0, y, 47, 86, 233)
 			offscreen_canvas.SetPixel(offscreen_canvas.width - 1, y, 47, 86, 233)

@@ -52,7 +52,7 @@ class RunText(SampleBase):
 			for i in range(len(list_keys)):
 				list_keys[i] = list_keys[i].replace("\n", "")
 			for i in range(len(list_values)):
-                list_values[i] = list_values[i].replace("\n", "")
+				list_values[i] = list_values[i].replace("\n", "")
 
 			offscreen_canvas.Clear()
 
