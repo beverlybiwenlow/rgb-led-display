@@ -47,6 +47,7 @@ class RunText(SampleBase):
 			for i in range(len(list_values)):
                                 list_values[i] = list_values[i].replace("\n", "")
 
+			offscreen_canvas.Clear()
 
 			# Light up keys, values and borders
 			length_key_1 = self.light_keys(offscreen_canvas, list_keys[0], font_key, font_small, x_pos_key, y_pos_list[0], color_key, 2)
