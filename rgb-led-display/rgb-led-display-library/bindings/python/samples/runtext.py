@@ -62,17 +62,18 @@ class RunText(SampleBase):
 			self.light_borders(offscreen_canvas)
 
 			# Light up values
-			length_val_1 = graphics.DrawText(offscreen_canvas, font_val, x_pos_val_1, y_pos_list[0], color_val, list_values[0])
-			length_val_2 = graphics.DrawText(offscreen_canvas, font_val, x_pos_val_2, y_pos_list[1], color_val, list_values[1])
+			self.light_values(offscreen_canvas, font_val, x_pos_val_1, y_pos_list[0], color_val, list_values[0], length_val_1, x_pos_key, length_key_1, list_keys[0], color_key, font_key, font_small, 1)
+#			self.light_values(offscreen_canvas, font_val, x_pos_val_2, y_pos_list[1], color_val, list_values[1], length_val_2, x_pos_key, length_key_2, list_keys[1], color_key, font_key, font_small, 2)
 
 			offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 			time.sleep(0.05)
 
 
 
-	def light_values(offscreen_canvas, font_val, x_pos_val, y_pos_val, color_val, values_text):
+	def light_values(self, offscreen_canvas, font_val, x_pos_val, y_pos_val, color_val, values_text, length_val, x_pos_key, length_key, keys_text, color_key, font_key, font_small, row):
+
 		# Check if number becomes too big (crosses boundary)
-		val_boundary_1 = x_pos_key + length_key_1
+		val_boundary = x_pos_key + length_key
 		if length_val + val_boundary >= offscreen_canvas.width:
 
 			# Decrease the font size until it does not cross boundary
@@ -85,9 +86,9 @@ class RunText(SampleBase):
 
 				if length_val + val_boundary < offscreen_canvas.width:
 					x_pos_val = offscreen_canvas.width - 1 - length_val
-					length_val = graphics.DrawText(offscreen_canvas, font_val, x_pos_val, 13, color_val, values_text)
+					length_val = graphics.DrawText(offscreen_canvas, font_val, x_pos_val, y_pos_val, color_val, values_text)
 					self.light_borders(offscreen_canvas)
-					length_key = self.light_keys(offscreen_canvas, keys_text, font_key, font_small, x_pos_key, color_key)
+					length_key = self.light_keys(offscreen_canvas, keys_text, font_key, font_small, x_pos_key, y_pos_val, color_key, row)
 					break
 				else:
 					# if smallest font is still too big, split number into 2 rows
@@ -96,8 +97,8 @@ class RunText(SampleBase):
 						values_array = []
 						values_array.append(values_text[:num])
 						values_array.append(values_text.replace(values_array[0], ''))
-						height1 = offscreen_canvas.height / 2
-						height2 = offscreen_canvas.height -1
+						height1 = (row * 16) - 8
+						height2 = (row * 16) - 1
 						offscreen_canvas.Clear()
 						length_val1 = graphics.DrawText(offscreen_canvas, font_small, 0, 0, color_val, values_array[0])
 						length_val2 = graphics.DrawText(offscreen_canvas, font_small, 0, 0, color_val, values_array[1])
@@ -115,6 +116,8 @@ class RunText(SampleBase):
 						break
 
 
+		else:
+			length_val = graphics.DrawText(offscreen_canvas, font_val, x_pos_val, y_pos_val, color_val, values_text)
 
 	def light_keys(self, offscreen_canvas, keys_text, font_key, font_small, x_pos_key, y_pos_key, color_key, row):
 		if " " in keys_text:
