@@ -12,12 +12,10 @@ endpoint = "/api/v1/totals_allcustomers/"
 
 def success_callback(response):
 	logger.info("API Call Success")
-#	data = response.json()
 	data = response.text
 	data = json.loads(data, object_pairs_hook=OrderedDict)
 	f_keys = open('data_keys.txt','w')
 	f_values = open('data_values.txt','w')
-#	print(data)
 	print(data)
 
 	for key in data:
