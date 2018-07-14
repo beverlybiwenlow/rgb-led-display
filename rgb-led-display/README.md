@@ -47,3 +47,9 @@ The display script for the 1st RPi is [runtext_1.py](rgb-led-display-library/bin
     sudo python3 runtext_2.py -P2
     ```
     As mentioned earlier, the 2nd RPi has a different display script from the 1st. It is also only in charge of 2 rows and thus -_P2_ is used.
+
+
+## Final notes:
+-   Default settings for the displays (eg. brightness, no. of panels in a chain, etc) can be changed [here](rgb-led-display-library/bindings/python/samples/samplebase.py).
+-   If the displays flicker a lot, check that --led-slowdown-gpio is set to a default of 4 (the highest allowed value). This will slow down the RPi such that its speed matches the panels better and reduce a lot of the flickering.
+-   For some reason, a --led-brightness setting of 100% leads to the least amount of flickering.
