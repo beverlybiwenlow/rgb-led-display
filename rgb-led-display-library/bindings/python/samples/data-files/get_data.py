@@ -7,8 +7,9 @@ import time
 import logging
 import logging.handlers
 
-url = "http://ec2-54-213-39-245.us-west-2.compute.amazonaws.com:5775"
-endpoint = "/api/v1/totals_allcustomers/"
+# Fill in API call details
+url = ""
+endpoint = ""
 
 def success_callback(response):
 	logger.info("API Call Success")
